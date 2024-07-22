@@ -164,31 +164,6 @@ public class Pedido {
 		
 	 }
 	}
-		
-		
-		/*if(pedido != null) {
-			if(pedido.getStatus() == StatusPedido.ABERTO && status == StatusPedido.CONCLUIDO) {
-				Integer qtdAtualizada = estoque.getQuantidade() + pedido.getQuantidade();
-				estoque.setQuantidade(qtdAtualizada);
-				DAOEstoque.atualizar(estoque);
-				pedido.setStatus(status);
-				DAOEstoque.abrirTransacao().atualizar(estoque).fecharTransacao().fecharConexao();
-				DAO.abrirTransacao().atualizar(pedido).fecharTransacao().fecharConexao();
-		
-				System.out.println("Pedido Concluido com Sucesso");
-				
-			} else if(pedido.getStatus() == StatusPedido.ABERTO && status == StatusPedido.CANCELADO) {
-				System.out.println("Pedido Cancelado Com sucesso");
-				pedido.setStatus(status);
-				DAO.abrirTransacao().atualizar(pedido).fecharTransacao().fecharConexao();
-				
-			} else if(pedido.getStatus() == StatusPedido.CONCLUIDO) {
-				System.out.println("Pedido ja foi concluido na Data: " + pedido.getData() + " - nao é possivel Alterar Status");
-				
-			} else if(pedido.getStatus() == StatusPedido.CANCELADO && status == StatusPedido.CONCLUIDO);
-				System.out.println("Nao é Possivel Alterar Status de um Pedido Cancelado");
-				System.out.println("Cancelado na data: " + pedido.getData());
-		  } */
 		} catch (Exception e) {
 			System.out.println("Pedido nao existente");
 			
