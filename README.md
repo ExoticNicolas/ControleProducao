@@ -1,0 +1,1 @@
+alguns testes de cadastro de produtos, e criacao de pedidos de produção, os pedidos sao gerados automaticamente em aberto com a data e hora do momento, quando atualizados para concluido, a quantidade do estoque aumenta automaticamente
