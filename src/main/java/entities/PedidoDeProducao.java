@@ -10,12 +10,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import DAO.DAO;
 
 @Entity
-public class Pedido {
+@Table(name = "pedido_producao")
+public class PedidoDeProducao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +30,25 @@ public class Pedido {
 	@Column(nullable = false)
 	private Integer quantidade;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, name ="data_abertura")
 	private String dataAbertura;
 	
+	@Column(name = "data_fechamento")
 	private String dataFechamento;
 	
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
 	
 	@ManyToOne
+	@JoinColumn(name = "estoque_id", referencedColumnName = "id")
 	private Estoque estoque;
 
 	
 	
-	public Pedido(){
+	public PedidoDeProducao(){
 		
 	}
-	public Pedido(String nomeProduto, Integer quantidade){
+	public PedidoDeProducao(String nomeProduto, Integer quantidade){
 		this.nomeProduto = nomeProduto;
 		this.quantidade = quantidade;
 		this.dataAbertura = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
@@ -98,13 +103,13 @@ public class Pedido {
 		this.estoque = estoque;
 	}
 	
-	public void registrarPedido(Long id, Integer quantidade, DAO<Estoque> DAOEstoque,DAO<Pedido>DAO) {
+	public void registrarPedido(Long id, Integer quantidade, DAO<Estoque> DAOEstoque,DAO<PedidoDeProducao>DAO) {
 		Estoque estoque = DAOEstoque.em.find(Estoque.class, id);
 		
 		if(estoque == null) {
 			System.out.println("Produto nao existe em estoque");
 		} else {
-			Pedido pedido = new Pedido(estoque.getNome(),quantidade);
+			PedidoDeProducao pedido = new PedidoDeProducao(estoque.getNome(),quantidade);
 			pedido.setEstoque(estoque);
 			DAO.abrirTransacao().incluir(pedido).fecharTransacao().fecharConexao();
 			System.out.println("Pedido Gerado com Suceso ID: " + pedido.getId() + " ITEM: " + pedido.getNome() + " QTD: " + pedido.getQuantidade() + " DATA PEDIDO: " + pedido.getDataAbertura());
@@ -115,11 +120,11 @@ public class Pedido {
 	public void atualizarPedido(Long id, StatusPedido status) {
 		
 		DAO<Estoque> DAOEstoque = new DAO<Estoque>();
-		DAO<Pedido> DAO = new DAO<Pedido>();
+		DAO<PedidoDeProducao> DAO = new DAO<PedidoDeProducao>();
 		Estoque estoque = new Estoque();
 		
 		try {
-		Pedido pedido = DAO.em.find(Pedido.class, id);
+		PedidoDeProducao pedido = DAO.em.find(PedidoDeProducao.class, id);
 		estoque = DAOEstoque.em.find(Estoque.class, pedido.getEstoque().getId());
 		
 		if(pedido != null) {

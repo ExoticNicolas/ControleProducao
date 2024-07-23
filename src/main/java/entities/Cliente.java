@@ -5,14 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import DAO.DAO;
-
 @Entity
-@Table(name = "produto")
-public class Produto {
+@Table(name = "clientes")
+public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,35 +18,52 @@ public class Produto {
 	@Column(nullable = false)
 	private String nome;
 	
-	@OneToOne(mappedBy = "produtos")
-	private Estoque estoque;
+	@Column(nullable = false)
+	private String CNPJ;
 	
-	public Produto() {
+	@Column(name = "data_cadastro", nullable = false)
+	private String dataCadastro;
+
+	public Cliente() {
 		
 	}
-	public Produto(String nome) {
+	public Cliente(Long id, String nome, String cNPJ, String dataCadastro) {
+		this.id = id;
 		this.nome = nome;
+		CNPJ = cNPJ;
+		this.dataCadastro = dataCadastro;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public void adicionarProduto(String nome, DAO<Produto> DAO) {
-		Produto produto = new Produto(nome);
-		DAO.incluirAtomico(produto);
-		
-		
-		
+
+	public String getCNPJ() {
+		return CNPJ;
+	}
+
+	public void setCNPJ(String cNPJ) {
+		CNPJ = cNPJ;
+	}
+
+	public String getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(String dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
 }

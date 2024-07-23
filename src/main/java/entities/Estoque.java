@@ -12,10 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Query;
+import javax.persistence.Table;
 
 import DAO.DAO;
 
 @Entity
+@Table(name = "estoque")
 public class Estoque {
 	
 	@Id
@@ -32,9 +34,11 @@ public class Estoque {
 	@JoinColumn(name = "id_produto" , referencedColumnName = "id")
 	private Produto produtos;
 	
-	@OneToMany
-	@JoinColumn(name = "estoque_id")
-	private List<Pedido> pedidos;
+	@OneToMany(mappedBy = "estoque")
+	private List<PedidoDeProducao> pedidos;
+	
+	@OneToMany(mappedBy = "estoque")
+	private List<PedidoDeVenda> vendas;
 	
 	public Produto getProdutos() {
 		return produtos;
@@ -42,10 +46,10 @@ public class Estoque {
 	public void setProdutos(Produto produtos) {
 		this.produtos = produtos;
 	}
-	public List<Pedido> getPedidos() {
+	public List<PedidoDeProducao> getPedidos() {
 		return pedidos;
 	}
-	public void setPedidos(List<Pedido> pedidos) {
+	public void setPedidos(List<PedidoDeProducao> pedidos) {
 		this.pedidos = pedidos;
 	}
 	public Estoque() {
